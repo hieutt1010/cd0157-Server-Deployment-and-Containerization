@@ -12,7 +12,7 @@ import jwt
 from flask import Flask, jsonify, request, abort
 
 
-JWT_SECRET = os.environ.get('JWT_SECRET', 'abc123abc1234')
+JWT_SECRET = os.environ.get('JWT_SECRET', 'myjwtsecret')
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 
 
@@ -59,7 +59,8 @@ def require_jwt(function):
 
 @APP.route('/', methods=['POST', 'GET'])
 def health():
-    return jsonify("Healthy")
+    
+    return jsonify("Hello")
 
 
 @APP.route('/auth', methods=['POST'])
@@ -98,17 +99,15 @@ def decode_jwt():
         abort(401)
 
 
-    response = {'email': data['email'],
-                'exp': data['exp'],
-                'nbf': data['nbf'] }
+    response = {"email": data['email'],
+                "exp": data['exp'],
+                "nbf": data['nbf'] }
     return jsonify(**response)
 
 
 def _get_jwt(user_data):
     exp_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=2)
-    payload = {'exp': exp_time,
-               'nbf': datetime.datetime.utcnow(),
-               'email': user_data['email']}
+    payload = {"exp": exp_time, "nbf": datetime.datetime.utcnow(), "email": user_data['email']}
     return jwt.encode(payload, JWT_SECRET, algorithm='HS256')
 
 if __name__ == '__main__':
