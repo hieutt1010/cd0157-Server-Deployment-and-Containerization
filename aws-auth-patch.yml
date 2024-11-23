@@ -6,13 +6,17 @@ data:
       - system:nodes
       rolearn: arn:aws:iam::116758249766:role/eksctl-simple-jwt-api-nodegroup-ng-NodeInstanceRole-ZjPupcIsqb3s
       username: system:node:{{EC2PrivateDNSName}}
-    - system:masters
+    - groups:
+      - system:masters
       rolearn: arn:aws:iam::116758249766:role/UdacityFlaskDeployCBKubectlRole
       username: build
 kind: ConfigMap
 metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"mapRoles":"- groups:\n  - system:bootstrappers\n  - system:nodes\n  rolearn: arn:aws:iam::116758249766:role/eksctl-simple-jwt-api-nodegroup-ng-NodeInstanceRole-ZjPupcIsqb3s\n  username: system:node:{{EC2PrivateDNSName}}\n- system:masters\n  rolearn: arn:aws:iam::116758249766:role/UdacityFlaskDeployCBKubectlRole\n  username: build\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2024-11-23T08:42:07Z","name":"aws-auth","namespace":"kube-system","resourceVersion":"13184","uid":"c371d415-fe12-4dea-a650-7649b9076b37"}}
   creationTimestamp: "2024-11-23T08:42:07Z"
   name: aws-auth
   namespace: kube-system
-  resourceVersion: "2806"
+  resourceVersion: "13419"
   uid: c371d415-fe12-4dea-a650-7649b9076b37
