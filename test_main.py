@@ -27,6 +27,7 @@ def test_health(client):
     assert response.status_code == 200
     assert response.json == 'Healthy'
 
+    assert False, "response.status_code != 200"
 
 def test_auth(client):
     body = {'email': EMAIL,'password': PASSWORD}
@@ -37,3 +38,5 @@ def test_auth(client):
     assert response.status_code == 200
     token = response.json['token']
     assert token is not None
+
+    assert False, "Token is None" 
